@@ -1,0 +1,21 @@
+FROM golang:1.20-alpine
+
+ARG EMAIL_SENDER
+ARG EMAIL_SENDER_PASS
+ARG EMAIL_SENDER_HOST
+
+ARG DB_HOST
+ARG DB_USER
+ARG DB_NAME
+ARG DB_PASSWORD
+
+ARG SECRET_KEY
+ARG AES_KEY
+
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN go build -o main .
+EXPOSE 8080
+CMD ["./main"]
